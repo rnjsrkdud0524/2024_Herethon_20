@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      {{ destination }} | {{ travel_date }}-{{ travel_date2}} | {{ people }}명
+    </ul>
+    <a href="{% url 'community' %}">커뮤니티</a>
+    <hr />
+    <br />
+    <br />
+    {% if search_results %}
+    <h2>총 {{ search_results_count }}개의 숙소가 검색되었습니다.</h2>
+    <ul>
+      {% for record in search_results %}
+      <li>
+        <a href="{% url 'record_detail' record.id %}">
+          {{ record.destination }} - {{ record.travel_date }} ~ {{
+          record.travel_date2 }}- {{ record.people }}명
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>검색 결과가 없습니다.</p>
+    {% endif %}
+  </body>
+</html>
