@@ -1,2 +1,1 @@
-# 2024-Herethon-20
-# Herethon
+# 2024_Herethon_20
