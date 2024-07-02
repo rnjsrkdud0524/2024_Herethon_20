@@ -21,7 +21,7 @@ from homst import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main, name='main'),
-    path('community/', include('community.urls')),
+    path('community/', views.community, name='community'),
     path('mypage/', views.mypage, name='mypage'),
     path('search_results/', views.search_results, name='search_results'),
     path('record_detail/<int:record_id>/', views.record_detail, name='record_detail'),
