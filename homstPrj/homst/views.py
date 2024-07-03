@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import SearchRecord, SafetyFilter, Accommodation, Post
-from .forms import SearchRecordForm, PostForm
+from .models import SearchRecord, SafetyFilter, Accommodation, Post, Comment, Like
+from .forms import SearchRecordForm, PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def main(request):
     form = SearchRecordForm()
     safety_filters = SafetyFilter.objects.all()
     return render(request, 'homst/main.html', {'form': form, 'safety_filters': safety_filters})
 
+@login_required
 def mypage(request):
     return render(request, 'homst/mypage.html')
 
+@login_required
 def search_results(request):
     if request.method == 'GET':
         form = SearchRecordForm(request.GET)
@@ -60,7 +63,8 @@ def search_results(request):
 
     safety_filters = SafetyFilter.objects.all()
     return render(request, 'homst/main.html', {'form': form, 'safety_filters': safety_filters})
-        
+
+@login_required
 def record_detail(request, record_id):
     accommodation = get_object_or_404(Accommodation, id=record_id)
     context = {
@@ -68,14 +72,20 @@ def record_detail(request, record_id):
     }
     return render(request, 'homst/record_detail.html', context)
 
+@login_required
 def community(request):
-    posts = Post.objects.all()
+    category = request.GET.get('category', '')
+    if category:
+        posts = Post.objects.filter(category=category)
+    else:
+        posts = Post.objects.all()
+
     return render(request, 'homst/community.html', {'posts': posts})
 
 @login_required
 def community_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -85,10 +95,12 @@ def community_create(request):
         form = PostForm()
     return render(request, 'homst/community_create.html', {'form': form})
 
+@login_required
 def community_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'homst/community_detail.html', {'post': post})
 
+@login_required
 def community_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -100,9 +112,44 @@ def community_update(request, pk):
         form = PostForm(instance=post)
     return render(request, 'homst/community_update.html', {'form': form, 'post': post})
 
+@login_required
 def community_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         post.delete()
         return redirect('community')
     return render(request, 'homst/community_delete.html', {'post': post})
+
+
+@login_required
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+        return redirect('community_detail', pk=post.id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'community_detail.html', {'post': post, 'comment_form': form})
+
+@login_required
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('community_detail', pk=pk)
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.author == request.user:
+        post_id = comment.post.id
+        comment.delete()
+    return redirect('community_detail', pk=post_id)

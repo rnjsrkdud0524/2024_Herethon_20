@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from homst import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +32,7 @@ urlpatterns = [
     path('search/', views.search_results, name='search_results'),
     path('record_detail/<int:record_id>/', views.record_detail, name='record_detail'),
     path('accounts/', include('accounts.urls')),
-]
+    path('post/<int:pk>/like/', views.like_post, name='like_post'),
+    path('post/<int:pk>/comment/', views.add_comment, name='add_comment'),
+    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

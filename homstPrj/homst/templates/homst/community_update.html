@@ -8,23 +8,7 @@
   <body>
     <div class="form-container">
       <form method="post" action="{% url 'community_update' post.id %}">
-        {% csrf_token %}
-        <div>
-          <label for="title">제목</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value="{{ post.title }}"
-            required
-          />
-        </div>
-        <div>
-          <label for="content">내용</label>
-          <textarea id="content" name="content" rows="10" required>
-{{ post.content }}</textarea
-          >
-        </div>
+        {% csrf_token %} {{ form.as_p }}
         <button type="submit">수정 완료</button>
         <a href="{% url 'community_detail' post.id %}">취소</a>
       </form>
