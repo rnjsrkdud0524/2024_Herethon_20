@@ -1,5 +1,5 @@
 from django import forms
-from .models import SearchRecord, SafetyFilter
+from .models import SearchRecord, SafetyFilter, Post
 
 class SearchRecordForm(forms.ModelForm):
     safety_filter = forms.ModelMultipleChoiceField(
@@ -24,4 +24,13 @@ class SearchRecordForm(forms.ModelForm):
             'travel_date2' : '여행 종료일',
             'people': '인원수',
             'safety_filter': '안심필터',
+        }
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content',]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '제목을 입력하세요'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': '내용을 입력하세요'}),
         }
