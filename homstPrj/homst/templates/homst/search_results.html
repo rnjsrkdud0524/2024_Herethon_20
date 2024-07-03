@@ -20,7 +20,7 @@
       <h2>{{ accommodation.name }}</h2>
       <p>{{ accommodation.location }}</p>
       <p>{{ accommodation.review_score }}</p>
-      <p>{{ accommodation.price }} 원</p>
+      <p>{{ accommodation.price }}원</p>
       <p>
         {% for filter in accommodation.safety_filters.all %} {{ filter.name }} |
         {% endfor %}

@@ -32,7 +32,7 @@ class Accommodation(models.Model):
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     review_score = models.FloatField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.PositiveIntegerField(max_length=200)
     safety_filters = models.ManyToManyField('SafetyFilter')
 
     def __str__(self):
