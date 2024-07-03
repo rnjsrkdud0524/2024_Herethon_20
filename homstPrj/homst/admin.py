@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SafetyFilter, Accommodation,  SearchRecord
+from .models import SafetyFilter, Accommodation,  SearchRecord, SortOption
 
 # Register your models here.
 
@@ -22,3 +22,10 @@ class SearchRecordAdmin(admin.ModelAdmin):
     search_fields = ('destination',)
     list_filter = ('travel_date', 'people', 'safety_filter')
     filter_horizontal = ('safety_filter',)
+
+@admin.register(SortOption)
+class SortOptionAdmin(admin.ModelAdmin):
+    list_display = ('sort_type',)
+    ordering = ('sort_type',)
+    list_filter = ('sort_type',)
+    search_fields = ('sort_type',)

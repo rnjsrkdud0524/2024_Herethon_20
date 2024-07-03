@@ -32,9 +32,21 @@ class Accommodation(models.Model):
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     review_score = models.FloatField(max_length=200)
-    price = models.PositiveIntegerField(max_length=200)
+    price = models.PositiveIntegerField()
     safety_filters = models.ManyToManyField('SafetyFilter')
 
     def __str__(self):
         return self.name
+
+class SortOption(models.Model):
+    SORT_CHOICES = [
+        ('price_asc', '가격 낮은 순서'),
+        ('price_desc', '가격 높은 순서'),
+        ('rating_asc', '별점 낮은 순서'),
+        ('rating_desc', '별점 높은 순서'),
+    ]
+
+    sort_type = models.CharField(max_length=20, choices=SORT_CHOICES, unique=True)
     
+    def __str__(self):
+        return dict(self.SORT_CHOICES).get(self.sort_type, self.sort_type)

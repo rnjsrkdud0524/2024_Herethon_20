@@ -25,11 +25,23 @@ def search_results(request):
             people = form.cleaned_data['people']
             safety_filters_ids = request.GET.getlist('safety_filter')
             safety_filters = SafetyFilter.objects.filter(id__in=safety_filters_ids)
-
+            sort_by = request.GET.get('sort_by', '')
+            
             accommodations = Accommodation.objects.filter(
             location__icontains=destination,
             safety_filters__in=safety_filters
             ).distinct()
+
+            sort_by = request.GET.get('sort_by')
+            if sort_by == 'price_asc':
+                accommodations = accommodations.order_by('price')
+            elif sort_by == 'price_desc':
+                accommodations = accommodations.order_by('-price')
+            elif sort_by == 'rating_asc':
+                accommodations = accommodations.order_by('review_score')
+            elif sort_by == 'rating_desc':
+                accommodations = accommodations.order_by('-review_score')
+
 
             search_results_count = accommodations.count()
 
@@ -41,7 +53,8 @@ def search_results(request):
                 'travel_date2': travel_date2,
                 'people': people,
                 'safety_filters': safety_filters,
-                'form':form
+                'form':form,
+                'sort_by': sort_by
             })
     
     else:
