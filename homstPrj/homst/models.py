@@ -27,3 +27,14 @@ class SearchRecord(models.Model):
 
     def __str__(self):
         return f"{self.destination} - {self.travel_date} ~ {self.travel_date2} - {self.people}명"
+
+class Accommodation(models.Model):
+    name = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    review_score = models.FloatField(max_length=200)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    safety_filters = models.ManyToManyField('SafetyFilter')
+
+    def __str__(self):
+        return self.name
+    

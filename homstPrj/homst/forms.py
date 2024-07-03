@@ -26,3 +26,4 @@ class SearchRecordForm(forms.ModelForm):
             'people': '인원수',
             'safety_filter': '안심필터',
         }
+

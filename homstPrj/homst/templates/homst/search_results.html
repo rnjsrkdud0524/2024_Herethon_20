@@ -13,19 +13,20 @@
     <hr />
     <br />
     <br />
-    {% if search_results %}
+    {% if accommodations %}
     <h2>총 {{ search_results_count }}개의 숙소가 검색되었습니다.</h2>
+    {% for accommodation in accommodations %}
     <ul>
-      {% for record in search_results %}
-      <li>
-        <a href="{% url 'record_detail' record.id %}">
-          {{ record.destination }} - {{ record.travel_date }} ~ {{
-          record.travel_date2 }}- {{ record.people }}명
-        </a>
-      </li>
-      {% endfor %}
+      <h2>{{ accommodation.name }}</h2>
+      <p>{{ accommodation.location }}</p>
+      <p>{{ accommodation.review_score }}</p>
+      <p>{{ accommodation.price }} 원</p>
+      <p>
+        {% for filter in accommodation.safety_filters.all %} {{ filter.name }} |
+        {% endfor %}
+      </p>
     </ul>
-    {% else %}
+    {% endfor %} {% else %}
     <p>검색 결과가 없습니다.</p>
     {% endif %}
   </body>

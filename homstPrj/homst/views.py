@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import SearchRecord, SafetyFilter
+from .models import SearchRecord, SafetyFilter, Accommodation
 from .forms import SearchRecordForm
 
 # Create your views here.
@@ -26,25 +26,22 @@ def search_results(request):
             safety_filters_ids = request.GET.getlist('safety_filter')
             safety_filters = SafetyFilter.objects.filter(id__in=safety_filters_ids)
 
-            
-            search_results = SearchRecord.objects.filter(
-                destination=destination,
-                travel_date=travel_date,
-                travel_date2=travel_date2,
-                people=people,
-                safety_filter__in=safety_filters
+            accommodations = Accommodation.objects.filter(
+            location__icontains=destination,
+            safety_filters__in=safety_filters
             ).distinct()
-            
-            search_results_count = search_results.count()
+
+            search_results_count = accommodations.count()
 
             return render(request, 'homst/search_results.html', {
-                'search_results': search_results,
+                'accommodations': accommodations,
                 'search_results_count': search_results_count,
                 'destination': destination,
                 'travel_date': travel_date,
                 'travel_date2': travel_date2,
                 'people': people,
-                'safety_filters': safety_filters
+                'safety_filters': safety_filters,
+                'form':form
             })
     
     else:
