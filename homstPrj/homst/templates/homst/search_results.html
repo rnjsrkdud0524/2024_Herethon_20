@@ -7,9 +7,10 @@
   </head>
   <body>
     <ul>
-      {{ destination }} | {{ travel_date }}-{{ travel_date2}} | {{ people }}명
+      {{ destination }} | {{ travel_date }} - {{ travel_date2}} | {{ people }}명
     </ul>
     <a href="{% url 'community' %}">커뮤니티</a>
+    <a href="{% url 'mypage' %}">마이페이지</a>
     <hr />
     <br />
     <br />
@@ -17,7 +18,11 @@
     <h2>총 {{ search_results_count }}개의 숙소가 검색되었습니다.</h2>
     {% for accommodation in accommodations %}
     <ul>
-      <h2>{{ accommodation.name }}</h2>
+      <h2>
+        <a href="{% url 'record_detail' record_id=accommodation.id %}"
+          >{{ accommodation.name }}</a
+        >
+      </h2>
       <p>{{ accommodation.location }}</p>
       <p>{{ accommodation.review_score }}</p>
       <p>{{ accommodation.price }}원</p>

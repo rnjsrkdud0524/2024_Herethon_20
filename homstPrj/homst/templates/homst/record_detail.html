@@ -6,6 +6,24 @@
     <title>Document</title>
   </head>
   <body>
-    숙소 상세 정보 1 2 3 4
+    <a href="{% url 'community' %}">커뮤니티</a>
+    <a href="{% url 'mypage' %}">마이페이지</a>
+    <h2>{{ accommodation.name }}</h2>
+    <p>{{ accommodation.location }}</p>
+    <p>{{ accommodation.review_score }}</p>
+    <p>{{ accommodation.price }}원</p>
+    <p>
+      {% for filter in accommodation.safety_filters.all %} {{ filter.name }} |
+      {% endfor %}
+    </p>
+    <br />
+    <br />
+    <hr />
+    <h3>실제 이용객들의 평가 후기</h3>
+    후기글
+    <br />
+    <br />
+    <h3>숙소 안전 정보</h3>
+    정보
   </body>
 </html>

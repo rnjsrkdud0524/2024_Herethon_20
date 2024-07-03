@@ -51,8 +51,8 @@ def search_results(request):
     return render(request, 'homst/main.html', {'form': form, 'safety_filters': safety_filters})
         
 def record_detail(request, record_id):
-    record = get_object_or_404(SearchRecord, id=record_id)
+    accommodation = get_object_or_404(Accommodation, id=record_id)
     context = {
-        'record': record,
+        'accommodation': accommodation,
     }
     return render(request, 'homst/record_detail.html', context)
