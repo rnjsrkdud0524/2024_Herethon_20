@@ -150,14 +150,6 @@ def like_post(request, pk):
     return redirect('community_detail', pk=pk)
 
 @login_required
-def delete_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
-    if comment.author == request.user:
-        post_id = comment.post.id
-        comment.delete()
-    return redirect('community_detail', pk=post_id)
-
-@login_required
 def mypage(request):
     user = request.user
     liked_posts = user.liked_posts.all()
