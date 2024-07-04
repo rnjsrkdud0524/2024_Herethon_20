@@ -20,8 +20,10 @@
     {% endif %}
     <p>작성일: {{ post.created_at }}</p>
     <br />
+    {% if user.is_authenticated and post.author == user %}
     <a href="{% url 'community_update' post.id %}">수정하기</a>
     <a href="{% url 'community_delete' post.id %}">삭제하기</a>
+    {% endif %}
     <br />
     <br />
     <p>좋아요: <span id="like-count">{{ post.get_likes_count }}</span></p>
