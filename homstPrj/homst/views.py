@@ -12,10 +12,6 @@ def main(request):
     return render(request, 'homst/main.html', {'form': form, 'safety_filters': safety_filters})
 
 @login_required
-def mypage(request):
-    return render(request, 'homst/mypage.html')
-
-@login_required
 def search_results(request):
     if request.method == 'GET':
         form = SearchRecordForm(request.GET)
@@ -153,3 +149,16 @@ def delete_comment(request, comment_id):
         post_id = comment.post.id
         comment.delete()
     return redirect('community_detail', pk=post_id)
+
+@login_required
+def mypage(request):
+    user = request.user
+    liked_posts = user.liked_posts.all()
+    authored_posts = user.posts.all()
+
+    context = {
+        'user': user,
+        'liked_posts': liked_posts,
+        'authored_posts': authored_posts,
+    }
+    return render(request, 'homst/mypage.html', context)
