@@ -54,7 +54,7 @@
           required
         />
       </div>
-
+      <br />
       <input type="submit" value="가입하기" />
     </form>
 
@@ -94,5 +94,8 @@
         passwordError.textContent = "";
       });
     </script>
+    <div class="login-link">
+      <p><a href="{% url 'accounts:login' %}">로그인</a></p>
+    </div>
   </body>
 </html>
