@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>커뮤니티 메인화면</title>
+    <style>
+      .post-thumbnail {
+        width: 200px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .post-thumbnail {
+          width: 150px;
+          height: 100px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .post-thumbnail {
+          width: 100px;
+          height: 75px;
+        }
+      }
+    </style>
   </head>
   <body>
     <a href="{% url 'main' %}">메인홈</a>
@@ -24,13 +46,18 @@
   </form>
 
     {% for post in posts %}
-    <h2>
-      <a href="{% url 'community_detail' post.id %}">{{ post.title }}</a>
-    </h2>
-    <p>{{ post.content }}</p>
-    <p>카테고리 - {{ post.get_category_display }}</p>
-    <p>좋아요 - {{ post.get_likes_count }}</p>
-    <p>{{ post.created_at }}</p>
+    <div class="post-item">
+      <h2>
+        <a href="{% url 'community_detail' post.id %}">{{ post.title }}</a>
+      </h2>
+      {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-thumbnail">  <!-- 미리보기 사진 -->
+      {% endif %}
+      <p>{{ post.content|truncatewords:20 }}</p>
+      <p>카테고리 - {{ post.get_category_display }}</p>
+      <p>좋아요 - {{ post.get_likes_count }}</p>
+      <p>{{ post.created_at }}</p>
+    </div>
     {% endfor %}
   </body>
 </html>

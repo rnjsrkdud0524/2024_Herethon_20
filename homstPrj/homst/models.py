@@ -44,6 +44,7 @@ class Accommodation(models.Model):
     review_score = models.FloatField(max_length=200)
     price = models.PositiveIntegerField()
     safety_filters = models.ManyToManyField('SafetyFilter')
+    image = models.ImageField(upload_to='accommodations/', blank=True, null=True)
 
     def __str__(self):
         return self.name

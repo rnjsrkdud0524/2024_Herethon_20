@@ -8,10 +8,6 @@
       .comment {
         white-space: pre-line;
       }
-      img {
-        max-width: 100%;
-        height: auto;
-      }
     </style>
   </head>
   <body>
@@ -20,7 +16,12 @@
     <p>카테고리: {{ post.get_category_display }}</p>
     <p>작성자: {{ post.author }}</p>
     {% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+    <img
+      src="{{ post.image.url }}"
+      alt="{{ post.title }}"
+      width="500"
+      height="auto"
+    />
     {% endif %}
     <p>작성일: {{ post.created_at }}</p>
     <br />
