@@ -55,5 +55,5 @@ class AccommodationForm(forms.ModelForm):
             'review_score': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '별점'}),
             'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '가격'}),
             'safety_filters': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
+            'image' : forms.FileInput(attrs={'class':'form-control-file'})
         }
-

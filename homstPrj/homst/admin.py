@@ -11,7 +11,7 @@ class SafetyFilterAdmin(admin.ModelAdmin):
 
 @admin.register(Accommodation)
 class AccommodationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'review_score', 'price')
+    list_display = ('name', 'location', 'review_score', 'price', 'image')
     search_fields = ('name', 'location')
     list_filter = ('safety_filters',)
     filter_horizontal = ('safety_filters',)
@@ -32,9 +32,9 @@ class SortOptionAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'author', 'created_at') 
-    list_filter = ('category', 'created_at')  
-    search_fields = ('title', 'content')  
+    list_display = ('title', 'category', 'author', 'created_at', 'image') 
+    list_filter = ('category', 'created_at')
+    search_fields = ('title', 'content')
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
