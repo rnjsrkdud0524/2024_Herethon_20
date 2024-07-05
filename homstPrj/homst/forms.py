@@ -34,6 +34,7 @@ class PostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '제목을 입력하세요'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': '내용을 입력하세요'}),
             'category': forms.Select(choices=Post.CATEGORY_CHOICES),
+            'image': forms.FileInput(attrs={'class':'form-control-file'}),
         }
 
 class CommentForm(forms.ModelForm):

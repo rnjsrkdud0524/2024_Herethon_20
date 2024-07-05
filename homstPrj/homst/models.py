@@ -1,6 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
+import os
+from uuid import uuid4
+from django.utils import timezone
+
+def upload_filepath(instance, filename):
+    today_str = timezone.now().strftime("%Y%m%d")
+    file_basename = os.path.basename(filename)
+    return f'{instance._meta.model_name}/{today_str}/{str(uuid4())}_{file_basename}'
 
 # Create your models here.
 
